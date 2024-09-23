@@ -8,7 +8,7 @@
 #include <WiFi.h>
 
 // REPLACE WITH THE MAC Address of your receiver
-uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+uint8_t broadcastAddress[] = {0xe4, 0x65, 0xb8, 0xd8, 0xef, 0x7c};
 
 // Incoming readings
 String incomingMsg;
@@ -53,6 +53,7 @@ void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len)
     Serial.print("Bytes received: ");
     Serial.println(len);
     incomingMsg = incomingMessage.msg;
+    Serial.println(incomingMsg);
 }
 
 void setup()
