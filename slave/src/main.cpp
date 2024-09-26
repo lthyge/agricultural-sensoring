@@ -6,9 +6,11 @@
 */
 #include <esp_now.h>
 #include <WiFi.h>
+#include <mac_addresses.h>
+#include <esp_wifi.h>
 
 // REPLACE WITH THE MAC Address of your receiver
-uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+uint8_t broadcastAddress[] = PEER_TWO;
 
 // Incoming readings
 String incomingMsg;
@@ -53,6 +55,7 @@ void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len)
     Serial.print("Bytes received: ");
     Serial.println(len);
     incomingMsg = incomingMessage.msg;
+    Serial.println(incomingMsg);
 }
 
 void setup()
@@ -62,6 +65,8 @@ void setup()
 
     // Set device as a Wi-Fi Station
     WiFi.mode(WIFI_STA);
+
+    esp_wifi_set_channel(11, WIFI_SECOND_CHAN_NONE);
 
     // Init ESP-NOW
     if (esp_now_init() != ESP_OK)
