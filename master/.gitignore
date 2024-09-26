@@ -5,3 +5,4 @@
 .vscode/ipch
 
 include/Wifi_Secrets.h
+include/Wifi_Credentials.h
