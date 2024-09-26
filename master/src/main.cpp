@@ -10,6 +10,7 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <Wifi_Secrets.h>
+#include <Wifi_Credentials.h>
 
 AsyncWebServer server(80);
 
@@ -51,18 +52,22 @@ void setup()
     Serial.begin(115200);
 
     // Set device as a Wi-Fi Station
-    WiFi.mode(WIFI_MODE_APSTA);
+    WiFi.mode(WIFI_AP_STA);
+    WiFi.softAP(AP_SSID, AP_PWD, 6);
+    Serial.print("Mac Address: ");
+    Serial.println(WiFi.macAddress());
 
     // Init WiFi
-    WiFi.begin(ssid, password);
-    if (WiFi.waitForConnectResult() != WL_CONNECTED)
-    {
-        Serial.printf("WiFi Failed!\n");
-        return;
-    }
+    // WiFi.begin(ssid, password);
+    // if (WiFi.waitForConnectResult() != WL_CONNECTED)
+    // {
+    //     Serial.printf("WiFi Failed!\n");
+    //     return;
+    // }
 
     Serial.print("IP Address: ");
-    Serial.println(WiFi.localIP());
+    // Serial.println(WiFi.localIP());
+    Serial.println(WiFi.softAPIP());
     Serial.print("Wi-Fi Channel: ");
     Serial.println(WiFi.channel());
 
@@ -85,6 +90,12 @@ void setup()
     {
         Serial.println("Incoming connection on /");
         request->send(200, "text/plain", incomingMsg); 
+    });
+
+    server.on("/test", HTTP_GET, [](AsyncWebServerRequest *request)
+    {
+        Serial.println("Connection recieved on /test");
+        request->send(200, "text/plain", "This is a test page!");
     });
 
     server.onNotFound(notFound);
