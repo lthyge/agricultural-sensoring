@@ -3,6 +3,3 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
-
-include/Wifi_Secrets.h
-include/Wifi_Credentials.h
